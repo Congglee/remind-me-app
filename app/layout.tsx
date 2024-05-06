@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Separator } from "@/components/ui/separator";
+import NavBar from "@/components/NavBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <div className="flex flex-col items-center min-h-screen w-full dark:bg-black">
+            <NavBar />
             <Separator />
             {children}
           </div>
