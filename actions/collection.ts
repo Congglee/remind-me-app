@@ -1,10 +1,10 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { createCollectionSchemaType } from "@/schema/createCollection";
+import { CreateCollectionBodyType } from "@/schemas/collection.schema";
 import { currentUser } from "@clerk/nextjs/server";
 
-export async function createCollection(form: createCollectionSchemaType) {
+export async function createCollection(form: CreateCollectionBodyType) {
   const user = await currentUser();
 
   if (!user) {
@@ -12,11 +12,7 @@ export async function createCollection(form: createCollectionSchemaType) {
   }
 
   return await prisma.collection.create({
-    data: {
-      userId: user.id,
-      color: form.color,
-      name: form.name,
-    },
+    data: { userId: user.id, color: form.color, name: form.name },
   });
 }
 
@@ -28,9 +24,6 @@ export async function deleteCollection(id: number) {
   }
 
   return await prisma.collection.delete({
-    where: {
-      id,
-      userId: user.id,
-    },
+    where: { id, userId: user.id },
   });
 }

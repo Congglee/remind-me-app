@@ -1,7 +1,7 @@
 import { CollectionColors } from "@/lib/constants";
 import { z } from "zod";
 
-export const createCollectionSchema = z.object({
+export const CreateCollectionBody = z.object({
   name: z
     .string()
     .min(4, { message: "Collection name must be at least 4 characters" }),
@@ -10,4 +10,4 @@ export const createCollectionSchema = z.object({
     .refine((color) => Object.keys(CollectionColors).includes(color)),
 });
 
-export type createCollectionSchemaType = z.infer<typeof createCollectionSchema>;
+export type CreateCollectionBodyType = z.infer<typeof CreateCollectionBody>;

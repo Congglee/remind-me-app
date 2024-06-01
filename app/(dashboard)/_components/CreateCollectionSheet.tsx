@@ -6,9 +6,9 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import {
-  createCollectionSchema,
-  createCollectionSchemaType,
-} from "@/schema/createCollection";
+  CreateCollectionBody,
+  CreateCollectionBodyType,
+} from "@/schemas/collection.schema";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,34 +44,32 @@ interface Props {
 }
 
 export default function CreateCollectionSheet({ open, onOpenChange }: Props) {
-  const form = useForm<createCollectionSchemaType>({
-    resolver: zodResolver(createCollectionSchema),
+  const form = useForm<CreateCollectionBodyType>({
+    resolver: zodResolver(CreateCollectionBody),
     defaultValues: {},
   });
   const router = useRouter();
 
-  const onSubmit = form.handleSubmit(
-    async (data: createCollectionSchemaType) => {
-      try {
-        await createCollection(data);
+  const onSubmit = form.handleSubmit(async (data: CreateCollectionBodyType) => {
+    try {
+      await createCollection(data);
 
-        openChangeWrapper(false);
-        router.refresh();
+      openChangeWrapper(false);
+      router.refresh();
 
-        toast({
-          title: "Success",
-          description: "Collection created successfully!",
-        });
-      } catch (error) {
-        toast({
-          title: "Error",
-          description: "Something went wrong. Please try again later.",
-          variant: "destructive",
-        });
-        console.log("Error while creating collection", error);
-      }
+      toast({
+        title: "Success",
+        description: "Collection created successfully!",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+      console.log("Error while creating collection", error);
     }
-  );
+  });
 
   const openChangeWrapper = (open: boolean) => {
     form.reset();
